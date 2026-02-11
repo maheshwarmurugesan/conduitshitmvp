@@ -1,0 +1,115 @@
+@import "tailwindcss";
+
+/* SCADA Water Management style: dark theme, purple glow, red for alarms */
+:root {
+  --bg-canvas: #0c0e14;
+  --bg-panel: #151922;
+  --bg-panel-hover: #1c2129;
+  --text-primary: #f1f5f9;
+  --text-secondary: #cbd5e1;
+  --text-muted: #94a3b8;
+  --border: #2d3548;
+  --accent: #a78bfa;
+  --accent-glow: rgba(167, 139, 250, 0.35);
+  --accent-hover: #c4b5fd;
+  --alarm-critical: #ef4444;
+  --alarm-high: #f97316;
+  --alarm-medium: #eab308;
+  --alarm-low: #3b82f6;
+  --status-ok: #22c55e;
+  --status-warn: #eab308;
+  --chart-normal: #a78bfa;
+  --chart-alarm: #ef4444;
+}
+
+.dark {
+  --bg-canvas: #0c0e14;
+  --bg-panel: #151922;
+  --bg-panel-hover: #1c2129;
+  --text-primary: #f1f5f9;
+  --text-secondary: #cbd5e1;
+  --text-muted: #94a3b8;
+  --border: #2d3548;
+  --accent: #a78bfa;
+  --accent-glow: rgba(167, 139, 250, 0.35);
+  --accent-hover: #c4b5fd;
+  --alarm-critical: #ef4444;
+  --chart-normal: #a78bfa;
+  --chart-alarm: #ef4444;
+}
+
+/* Light mode optional */
+body.light-mode {
+  --bg-canvas: #f1f5f9;
+  --bg-panel: #ffffff;
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-muted: #64748b;
+  --border: #e2e8f0;
+  --accent: #7c3aed;
+  --chart-normal: #7c3aed;
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  font-family: ui-sans-serif, system-ui, -apple-system, sans-serif;
+  background: var(--bg-canvas);
+  color: var(--text-primary);
+  min-height: 100vh;
+  font-size: 14px;
+  line-height: 1.5;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.kpi-value {
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+/* Purple title glow */
+.title-glow {
+  text-shadow: 0 0 24px var(--accent-glow), 0 0 48px var(--accent-glow);
+}
+
+@keyframes alarm-flash {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+.alarm-critical-flash {
+  animation: alarm-flash 1s ease-in-out infinite;
+}
+
+@keyframes value-pulse {
+  0% { box-shadow: 0 0 0 0 var(--accent-glow); }
+  70% { box-shadow: 0 0 0 8px transparent; }
+  100% { box-shadow: 0 0 0 0 transparent; }
+}
+
+.value-updated {
+  animation: value-pulse 0.5s ease-out;
+}
+
+/* Smooth transitions for panels and bars */
+.panel-transition {
+  transition: background-color 0.2s ease, box-shadow 0.2s ease, transform 0.15s ease;
+}
+
+.bar-transition {
+  transition: height 0.5s ease-out, background-color 0.2s ease;
+}
+
+/* Bar chart entrance */
+@keyframes bar-in {
+  from { transform: scaleY(0); transform-origin: bottom; }
+  to { transform: scaleY(1); transform-origin: bottom; }
+}
+.bar-in {
+  animation: bar-in 0.5s ease-out forwards;
+}

@@ -1,0 +1,58 @@
+@import "tailwindcss";
+
+:root {
+  --background: #0a0a0a;
+  --foreground: #fafafa;
+  --muted: #a3a3a3;
+  --silver: #c0c0c0;
+  --border: rgba(192, 192, 192, 0.2);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-silver: #c0c0c0;
+  --font-sans: var(--font-sans);
+  --font-serif: var(--font-serif);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-feature-settings: "rlig" 1, "calt" 1;
+  font-family: var(--font-serif);
+}
+
+/* Apply button glow and float animation */
+@keyframes apply-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
+.apply-btn {
+  animation: apply-float 2.5s ease-in-out infinite;
+  box-shadow: 0 0 20px rgba(192, 192, 192, 0.5), 0 0 40px rgba(192, 192, 192, 0.25);
+  transition: box-shadow 0.3s ease;
+}
+
+.apply-btn:hover {
+  box-shadow: 0 0 30px rgba(192, 192, 192, 0.6), 0 0 60px rgba(192, 192, 192, 0.35);
+  animation-play-state: paused;
+}
+
+/* Premium liquid black background with silver accents */
+.premium-bg {
+  background: 
+    radial-gradient(ellipse 140% 100% at 15% 5%, rgba(30, 30, 32, 0.98) 0%, transparent 55%),
+    radial-gradient(ellipse 110% 90% at 85% 95%, rgba(20, 20, 22, 0.95) 0%, transparent 50%),
+    radial-gradient(ellipse 90% 70% at 55% 55%, rgba(40, 40, 45, 0.6) 0%, transparent 45%),
+    radial-gradient(ellipse 70% 50% at 30% 70%, rgba(25, 25, 28, 0.7) 0%, transparent 40%),
+    linear-gradient(180deg, #0d0d0d 0%, #0a0a0a 35%, #080808 70%, #050505 100%);
+  background-attachment: fixed;
+  min-height: 100vh;
+  background-blend-mode: normal;
+}

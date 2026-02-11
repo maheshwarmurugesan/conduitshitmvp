@@ -1,0 +1,112 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #0f2e6b;
+  --foreground-muted: #1a3a7a;
+  --accent: #0f3d7a;
+  --accent-hover: #0a2d5c;
+  --accent-light: #e8f0f9;
+  /* Premier navy palette for dropdown / refined UI */
+  --navy-deep: #0a1628;
+  --navy-main: #0e1f35;
+  --navy-soft: #132a42;
+  --navy-muted: #1e3a52;
+  --navy-border: rgba(255, 255, 255, 0.08);
+  --navy-text: rgba(255, 255, 255, 0.92);
+  --navy-text-muted: rgba(255, 255, 255, 0.72);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-serif), Georgia, serif;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+}
+
+.font-serif {
+  font-family: var(--font-serif);
+}
+
+.font-hero {
+  font-family: var(--font-hero), var(--font-serif), Georgia, serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Scroll-down animations — text pops up as you scroll */
+.scroll-reveal {
+  opacity: 0;
+  transform: translateY(40px) scale(0.98);
+  transition:
+    opacity 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.scroll-reveal.scroll-reveal-visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+/* Logo pop-up on scroll */
+.logo-pop {
+  opacity: 0;
+  transform: translateY(14px) scale(0.96);
+  transition:
+    opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.logo-pop.logo-pop-visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+/* Fade-in animation for sections */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+/* Slow float up and down for hero slogan */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.animate-float {
+  animation: float 4s ease-in-out 0.6s infinite;
+}
+
+/* Gradient button hover */
+.btn-gradient {
+  background: linear-gradient(135deg, var(--accent) 0%, var(--accent-hover) 100%);
+  transition: opacity 0.2s, transform 0.2s, box-shadow 0.2s;
+}
+.btn-gradient:hover {
+  opacity: 0.95;
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px rgba(15, 61, 122, 0.35);
+}
