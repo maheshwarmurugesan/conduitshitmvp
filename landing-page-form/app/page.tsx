@@ -427,13 +427,13 @@ export default function Home() {
             {loading ? "Submitting…" : "Submit"}
           </button>
 
-          <div className="pt-4">
+          <div className="pt-6 sm:pt-8 mt-4 sm:mt-6 px-1 sm:px-0">
             {partifulUrl ? (
               <a
                 href={partifulUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full h-12 font-mono text-sm font-semibold uppercase tracking-widest bg-transparent text-[var(--accent)] border-2 border-[var(--accent)] cyber-chamfer-sm flex items-center justify-center transition-all duration-150 hover:bg-[var(--accent)] hover:text-[var(--background)] hover:shadow-[var(--box-shadow-neon)] hover-float-slow text-glow"
+                className="block w-full min-h-12 py-3 px-4 font-mono text-sm font-semibold uppercase tracking-widest bg-transparent text-[var(--accent)] border-2 border-[var(--accent)] cyber-chamfer-sm flex items-center justify-center transition-all duration-150 hover:bg-[var(--accent)] hover:text-[var(--background)] hover:shadow-[var(--box-shadow-neon)] hover-float-slow text-glow text-center"
               >
                 Join Partiful for text blast reminders →
               </a>
@@ -443,6 +443,14 @@ export default function Home() {
               </span>
             )}
           </div>
+          <p className="text-center pt-4">
+            <a
+              href="/verify"
+              className="font-mono text-xs text-glow-muted hover:text-[var(--accent)] hover:underline"
+            >
+              Check CRM connection →
+            </a>
+          </p>
         </form>
         </div>
       </main>
