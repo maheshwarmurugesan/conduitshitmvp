@@ -1,13 +1,16 @@
 import { google } from "googleapis";
 
 function getAuth() {
-  const clientEmail = process.env.GOOGLE_SHEETS_CLIENT_EMAIL;
-  const privateKey = process.env.GOOGLE_SHEETS_PRIVATE_KEY?.replace(
-    /\\n/g,
-    "\n"
-  );
+  const clientEmail = process.env.GOOGLE_SHEETS_CLIENT_EMAIL?.trim();
+  let privateKey = process.env.GOOGLE_SHEETS_PRIVATE_KEY?.trim();
   if (!clientEmail || !privateKey) {
     throw new Error("Missing Google Sheets credentials in environment");
+  }
+  // Handle newlines: Vercel stores \n as literal backslash+n, convert to real newlines
+  privateKey = privateKey.replace(/\\n/g, "\n");
+  // Strip accidental outer quotes if pasted from JSON
+  if (privateKey.startsWith('"') && privateKey.endsWith('"')) {
+    privateKey = privateKey.slice(1, -1);
   }
   return new google.auth.GoogleAuth({
     credentials: { client_email: clientEmail, private_key: privateKey },
@@ -16,7 +19,7 @@ function getAuth() {
 }
 
 export async function appendRow(values: string[]) {
-  const spreadsheetId = process.env.GOOGLE_SHEETS_SPREADSHEET_ID;
+  const spreadsheetId = process.env.GOOGLE_SHEETS_SPREADSHEET_ID?.trim();
   if (!spreadsheetId) {
     throw new Error("Missing GOOGLE_SHEETS_SPREADSHEET_ID");
   }
@@ -31,7 +34,7 @@ export async function appendRow(values: string[]) {
 }
 
 export async function getRows(): Promise<string[][]> {
-  const spreadsheetId = process.env.GOOGLE_SHEETS_SPREADSHEET_ID;
+  const spreadsheetId = process.env.GOOGLE_SHEETS_SPREADSHEET_ID?.trim();
   if (!spreadsheetId) {
     throw new Error("Missing GOOGLE_SHEETS_SPREADSHEET_ID");
   }
