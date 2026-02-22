@@ -1,0 +1,370 @@
+@import "tailwindcss";
+
+/* ========== Cyberpunk design tokens (shiny glowing silver-grey accent) ========== */
+:root {
+  --background: #030305;
+  --foreground: #e0e0e0;
+  --card: #08080c;
+  --muted: #0c0c12;
+  --mutedForeground: #a8b0b8;
+  --textGlow: rgba(220, 228, 240, 0.3);
+  --accent: #d8e0e8;
+  --accentShine: #f0f4f8;
+  --accentSecondary: #ff00ff;
+  --accentTertiary: #00d4ff;
+  --border: #1a1a24;
+  --input: #08080c;
+  --ring: #d8e0e8;
+  --destructive: #ff3366;
+
+  --box-shadow-neon: 0 0 8px #d8e0e8, 0 0 16px rgba(216, 224, 232, 0.5), 0 0 24px rgba(200, 212, 228, 0.3);
+  --box-shadow-neon-sm: 0 0 5px #d8e0e8, 0 0 10px rgba(216, 224, 232, 0.4);
+  --box-shadow-neon-lg: 0 0 12px #d8e0e8, 0 0 24px rgba(216, 224, 232, 0.6), 0 0 48px rgba(200, 212, 228, 0.35);
+  --box-shadow-neon-secondary: 0 0 5px #ff00ff, 0 0 20px rgba(255, 0, 255, 0.4);
+
+  /* Chromatic aberration (theme: red/cyan) */
+  --chroma-red: #ff3366;
+  --chroma-cyan: #00e5ff;
+  --chroma-offset: 1.5px;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-muted: var(--muted);
+  --color-mutedForeground: var(--mutedForeground);
+  --color-accent: var(--accent);
+  --color-accentSecondary: var(--accentSecondary);
+  --color-accentTertiary: var(--accentTertiary);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-destructive: var(--destructive);
+}
+
+/* ========== Chamfer clip-paths ========== */
+.cyber-chamfer {
+  clip-path: polygon(
+    0 10px, 10px 0,
+    calc(100% - 10px) 0, 100% 10px,
+    100% calc(100% - 10px), calc(100% - 10px) 100%,
+    10px 100%, 0 calc(100% - 10px)
+  );
+}
+
+.cyber-chamfer-sm {
+  clip-path: polygon(
+    0 6px, 6px 0,
+    calc(100% - 6px) 0, 100% 6px,
+    100% calc(100% - 6px), calc(100% - 6px) 100%,
+    6px 100%, 0 calc(100% - 6px)
+  );
+}
+
+/* ========== Scanlines (CRT refresh texture) ========== */
+.scanlines::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent 0px,
+    transparent 1px,
+    rgba(0, 0, 0, 0.08) 1px,
+    rgba(0, 0, 0, 0.08) 2px
+  );
+  pointer-events: none;
+  z-index: 9998;
+}
+
+.scanlines::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.14) 2px,
+    rgba(0, 0, 0, 0.14) 4px
+  );
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* ========== Glowing text for readability ========== */
+.text-glow {
+  text-shadow: 0 0 14px var(--textGlow), 0 0 28px var(--textGlow), 0 0 40px rgba(216, 224, 232, 0.15);
+}
+
+.text-glow-muted {
+  color: #c8d0d8;
+  text-shadow: 0 0 10px rgba(200, 208, 216, 0.15), 0 0 20px var(--textGlow);
+}
+
+.text-dull {
+  color: #6b7280;
+  text-shadow: none;
+  opacity: 0.85;
+}
+.text-dull:hover {
+  color: #8b92a0;
+  opacity: 1;
+}
+
+.hover-glow:hover {
+  text-shadow: 0 0 18px rgba(216, 224, 232, 0.55), 0 0 36px rgba(216, 224, 232, 0.35);
+  transition: text-shadow 0.2s ease;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: #c8d0d8;
+  text-shadow: 0 0 10px rgba(200, 208, 216, 0.12);
+}
+
+.placeholder-glow::placeholder {
+  color: #c8d0d8;
+  text-shadow: 0 0 10px rgba(200, 208, 216, 0.12);
+}
+
+/* ========== Grid / circuit background (silver tint) ========== */
+@keyframes grid-drift {
+  0% { background-position: 0 0, 0 0; }
+  100% { background-position: 50px 0, 0 50px; }
+}
+
+.bg-grid {
+  background-color: var(--background);
+  background-image:
+    linear-gradient(rgba(216, 224, 232, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(216, 224, 232, 0.08) 1px, transparent 1px);
+  background-size: 50px 50px;
+  background-position: 0 0, 0 0;
+  animation: grid-drift 25s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bg-grid {
+    animation: none;
+  }
+}
+
+/* ========== Broken TV: static noise overlay ========== */
+@keyframes tv-static-shift {
+  0%, 100% { background-position: 0 0; }
+  50% { background-position: 2px 1px; }
+}
+
+.tv-static {
+  position: relative;
+}
+
+.tv-static::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' seed='1'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' fill='white'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 200px 200px;
+  opacity: 0.05;
+  pointer-events: none;
+  z-index: 9997;
+  animation: tv-static-shift 6s ease-in-out infinite;
+}
+
+/* ========== Broken TV: subtle screen flicker ========== */
+@keyframes tv-flicker {
+  0%, 96%, 100% { opacity: 0; }
+  97% { opacity: 0.03; }
+  98% { opacity: 0; }
+  99% { opacity: 0.02; }
+}
+
+.tv-flicker::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: black;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 9996;
+  animation: tv-flicker 4s ease-in-out infinite;
+}
+
+/* ========== Chromatic aberration (RGB split, theme colors) ========== */
+.chromatic-text {
+  text-shadow:
+    calc(-1 * var(--chroma-offset)) 0 var(--chroma-red),
+    var(--chroma-offset) 0 var(--chroma-cyan),
+    0 0 14px rgba(216, 224, 232, 0.35);
+}
+
+.chromatic-text-strong {
+  text-shadow:
+    -2px 0 var(--chroma-red),
+    2px 0 var(--chroma-cyan),
+    0 0 8px var(--accent);
+}
+
+.chromatic-panel {
+  box-shadow:
+    inset calc(-1 * var(--chroma-offset)) 0 0 rgba(255, 51, 102, 0.15),
+    inset var(--chroma-offset) 0 0 rgba(0, 229, 255, 0.15);
+}
+
+/* ========== Animations ========== */
+@keyframes blink {
+  50% { opacity: 0; }
+}
+
+.cursor-blink {
+  animation: blink 1s step-end infinite;
+}
+
+@keyframes glitch {
+  0%, 100% { transform: translate(0) skew(0deg); }
+  20% { transform: translate(-2px, 2px) skew(0.5deg); }
+  40% { transform: translate(2px, -2px) skew(-0.5deg); }
+  60% { transform: translate(-1px, -1px) skew(0.3deg); }
+  80% { transform: translate(1px, 1px) skew(-0.3deg); }
+}
+
+@keyframes glitch-text {
+  0%, 100% {
+    text-shadow: -1px 0 var(--accentSecondary), 1px 0 var(--accentTertiary);
+    transform: translate(0);
+  }
+  25% {
+    text-shadow: 1px 0 var(--accentSecondary), -1px 0 var(--accentTertiary);
+    transform: translate(-2px, 1px);
+  }
+  50% {
+    text-shadow: -1px 0 var(--accentTertiary), 1px 0 var(--accent);
+    transform: translate(2px, -1px);
+  }
+  75% {
+    text-shadow: 1px 0 var(--accent), -1px 0 var(--accentSecondary);
+    transform: translate(-1px, -2px);
+  }
+}
+
+@keyframes glitch-clip {
+  0%, 100% { clip-path: inset(0 0 0 0); transform: skew(0deg); }
+  25% { clip-path: inset(2% 0 98% 0); transform: skew(-0.8deg); }
+  50% { clip-path: inset(98% 0 2% 0); transform: skew(0.8deg); }
+  75% { clip-path: inset(0 2% 0 98%); transform: skew(-0.4deg); }
+}
+
+@keyframes glitch-flicker {
+  0%, 92%, 94%, 96%, 100% { opacity: 1; }
+  93%, 95%, 97% { opacity: 0.85; }
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes typewriter {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-up {
+  opacity: 0;
+  animation: fadeUp 0.5s ease-out forwards;
+}
+
+.animate-on-scroll {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+}
+
+.animate-on-scroll.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.animate-glitch {
+  animation: glitch 0.3s ease-in-out;
+}
+
+/* ========== Glitch (chromatic + clip-path + skew + flicker) ========== */
+.cyber-glitch {
+  position: relative;
+  text-shadow:
+    calc(-1 * var(--chroma-offset)) 0 var(--chroma-red),
+    var(--chroma-offset) 0 var(--chroma-cyan),
+    0 0 24px rgba(216, 224, 232, 0.4);
+}
+
+.glitch-on-hover {
+  transition: transform 0.15s ease-out, text-shadow 0.15s ease-out;
+}
+
+.glitch-on-hover:hover {
+  animation: glitch 0.4s ease-in-out;
+}
+
+.glitch-on-hover:hover.cyber-glitch {
+  animation: glitch 0.4s ease-in-out;
+  text-shadow:
+    -2px 0 var(--chroma-red),
+    2px 0 var(--chroma-cyan),
+    0 0 32px rgba(216, 224, 232, 0.55);
+}
+
+.glitch-corrupt {
+  animation: glitch-clip 4s ease-in-out infinite;
+}
+
+.glitch-corrupt-subtle {
+  animation: glitch-clip 8s ease-in-out infinite;
+}
+
+.glitch-flicker {
+  animation: glitch-flicker 3s step-end infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-fade-up,
+  .animate-glitch,
+  .glitch-on-hover:hover,
+  .glitch-corrupt,
+  .glitch-corrupt-subtle,
+  .glitch-flicker,
+  .tv-static::before,
+  .tv-flicker::after {
+    animation: none;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-mono), ui-monospace, monospace;
+}
+
+.font-heading {
+  font-family: var(--font-heading), var(--font-mono), ui-monospace, monospace;
+}
