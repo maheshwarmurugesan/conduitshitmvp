@@ -46,11 +46,9 @@ export async function POST(req: Request) {
   } catch (err) {
     const msg = err instanceof Error ? err.message : "Unknown error";
     console.error("Submit error:", msg);
-    // Show real error when DEBUG_FORM=1 (Vercel env) so you can see cause in Network tab
-    const showDebug = process.env.DEBUG_FORM === "1" || process.env.NODE_ENV === "development";
-    const safeError = showDebug ? msg : "Something went wrong. Please try again.";
+    // Show real error so you can fix it - remove this block and use generic message once fixed
     return NextResponse.json(
-      { error: safeError },
+      { error: msg },
       { status: 500 }
     );
   }
