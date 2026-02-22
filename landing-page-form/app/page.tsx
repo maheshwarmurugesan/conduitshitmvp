@@ -201,15 +201,16 @@ export default function Home() {
         </div>
 
         <h1
-          className={`font-heading text-4xl md:text-5xl font-bold uppercase tracking-widest text-[var(--foreground)] mb-3 transition-opacity duration-500 text-glow ${
+          className={`font-heading text-4xl md:text-5xl font-bold uppercase tracking-widest text-[var(--foreground)] mb-3 transition-opacity duration-500 text-glow text-center ${
             mounted ? "opacity-100" : "opacity-0"
           }`}
           style={mounted ? { animation: "fadeUp 0.6s ease-out" } : undefined}
         >
-          <span className="whitespace-nowrap">Be in curated groups</span>
+          <span className="block">Be in</span>
+          <span className="block">curated groups</span>
         </h1>
         <p
-          className={`font-mono text-sm text-glow-muted tracking-wide mb-10 transition-opacity duration-500 delay-100 hover-glow ${
+          className={`font-mono text-sm text-glow-muted tracking-wide mb-10 transition-opacity duration-500 delay-100 hover-glow text-center ${
             mounted ? "opacity-100" : "opacity-0"
           }`}
           style={mounted ? { animation: "fadeUp 0.5s ease-out 0.1s both" } : undefined}
@@ -221,7 +222,7 @@ export default function Home() {
         {/* Header reverted; only the company typewriter line is in the spacer */}
         <section
           ref={setScrollRef(0)}
-          className={`animate-on-scroll ${visible[0] ? "visible" : ""}`}
+          className={`animate-on-scroll text-center ${visible[0] ? "visible" : ""}`}
         >
           <h2 className="font-mono text-xs uppercase tracking-[0.25em] text-glow-muted mb-6 hover-glow transition-all duration-200">
             Previous events supported by
@@ -366,9 +367,9 @@ export default function Home() {
             </div>
           </div>
 
-          <div>
+          <div className="flex flex-col items-center text-center">
             <span className={labelClass}>Are you building something? *</span>
-            <div className="flex gap-8 mt-2">
+            <div className="flex gap-6 sm:gap-8 mt-2 justify-center flex-wrap">
               <label className="flex items-center gap-2 text-glow-muted font-mono text-sm cursor-pointer hover:text-[var(--accent)] hover-glow transition-all duration-200">
                 <input
                   type="radio"
