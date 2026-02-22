@@ -42,6 +42,57 @@ export default function Home() {
     return () => observers.forEach((ob) => ob.disconnect());
   }, [mounted]);
 
+  const supportedByNames = [
+    "Z Fellows",
+    "Y Combinator",
+    "Susa Ventures",
+    "Andreessen Horowitz",
+    "Verci",
+    "LvlUp Ventures",
+    "Detroit Venture Partners",
+  ];
+
+  const supportedByGlowStyles: { color: string; glow: string }[] = [
+    { color: "#7dd3fc", glow: "0 0 20px #7dd3fc, 0 0 40px #38bdf8, 0 0 60px #0ea5e9" },
+    { color: "#fb923c", glow: "0 0 20px #fb923c, 0 0 40px #f97316, 0 0 60px #ea580c" },
+    { color: "#4ade80", glow: "0 0 20px #4ade80, 0 0 40px #22c55e, 0 0 60px #16a34a" },
+    { color: "#c2414a", glow: "0 0 20px #c2414a, 0 0 40px #b91c1c, 0 0 60px #991b1b" },
+    { color: "#2dd4bf", glow: "0 0 20px #2dd4bf, 0 0 40px #14b8a6, 0 0 60px #0d9488" },
+    { color: "#e879f9", glow: "0 0 20px #e879f9, 0 0 40px #d946ef, 0 0 60px #c026d3" },
+    { color: "#f87171", glow: "0 0 20px #f87171, 0 0 40px #ef4444, 0 0 60px #dc2626" },
+  ];
+
+  const [typewriterIndex, setTypewriterIndex] = useState(0);
+  const [typewriterText, setTypewriterText] = useState("");
+  const [isDeleting, setIsDeleting] = useState(false);
+
+  useEffect(() => {
+    if (!mounted) return;
+    const name = supportedByNames[typewriterIndex];
+    const typeSpeed = isDeleting ? 45 : 90;
+    const pauseAtEnd = 2200;
+    const pauseAfterDelete = 600;
+
+    if (!isDeleting && typewriterText === name) {
+      const t = setTimeout(() => setIsDeleting(true), pauseAtEnd);
+      return () => clearTimeout(t);
+    }
+    if (isDeleting && typewriterText === "") {
+      const t = setTimeout(() => {
+        setIsDeleting(false);
+        setTypewriterIndex((i) => (i + 1) % supportedByNames.length);
+      }, pauseAfterDelete);
+      return () => clearTimeout(t);
+    }
+
+    const t = setTimeout(() => {
+      setTypewriterText((prev) =>
+        isDeleting ? name.slice(0, prev.length - 1) : name.slice(0, prev.length + 1)
+      );
+    }, typeSpeed);
+    return () => clearTimeout(t);
+  }, [mounted, typewriterIndex, typewriterText, isDeleting]);
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
@@ -133,57 +184,6 @@ export default function Home() {
   const setScrollRef = (i: number) => (el: HTMLElement | null) => {
     if (el) scrollRefs.current[i] = el;
   };
-
-  const supportedByNames = [
-    "Z Fellows",
-    "Y Combinator",
-    "Susa Ventures",
-    "Andreessen Horowitz",
-    "Verci",
-    "LvlUp Ventures",
-    "Detroit Venture Partners",
-  ];
-
-  const supportedByGlowStyles: { color: string; glow: string }[] = [
-    { color: "#7dd3fc", glow: "0 0 20px #7dd3fc, 0 0 40px #38bdf8, 0 0 60px #0ea5e9" },
-    { color: "#fb923c", glow: "0 0 20px #fb923c, 0 0 40px #f97316, 0 0 60px #ea580c" },
-    { color: "#4ade80", glow: "0 0 20px #4ade80, 0 0 40px #22c55e, 0 0 60px #16a34a" },
-    { color: "#c2414a", glow: "0 0 20px #c2414a, 0 0 40px #b91c1c, 0 0 60px #991b1b" },
-    { color: "#2dd4bf", glow: "0 0 20px #2dd4bf, 0 0 40px #14b8a6, 0 0 60px #0d9488" },
-    { color: "#e879f9", glow: "0 0 20px #e879f9, 0 0 40px #d946ef, 0 0 60px #c026d3" },
-    { color: "#f87171", glow: "0 0 20px #f87171, 0 0 40px #ef4444, 0 0 60px #dc2626" },
-  ];
-
-  const [typewriterIndex, setTypewriterIndex] = useState(0);
-  const [typewriterText, setTypewriterText] = useState("");
-  const [isDeleting, setIsDeleting] = useState(false);
-
-  useEffect(() => {
-    if (!mounted) return;
-    const name = supportedByNames[typewriterIndex];
-    const typeSpeed = isDeleting ? 45 : 90;
-    const pauseAtEnd = 2200;
-    const pauseAfterDelete = 600;
-
-    if (!isDeleting && typewriterText === name) {
-      const t = setTimeout(() => setIsDeleting(true), pauseAtEnd);
-      return () => clearTimeout(t);
-    }
-    if (isDeleting && typewriterText === "") {
-      const t = setTimeout(() => {
-        setIsDeleting(false);
-        setTypewriterIndex((i) => (i + 1) % supportedByNames.length);
-      }, pauseAfterDelete);
-      return () => clearTimeout(t);
-    }
-
-    const t = setTimeout(() => {
-      setTypewriterText((prev) =>
-        isDeleting ? name.slice(0, prev.length - 1) : name.slice(0, prev.length + 1)
-      );
-    }, typeSpeed);
-    return () => clearTimeout(t);
-  }, [mounted, typewriterIndex, typewriterText, isDeleting]);
 
   return (
     <div className="min-h-screen px-6 py-12 md:py-20">
@@ -426,22 +426,22 @@ export default function Home() {
             {loading ? "Submitting…" : "Submit"}
           </button>
 
-          <p className="text-center pt-4">
+          <div className="pt-4">
             {partifulUrl ? (
               <a
                 href={partifulUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="font-mono text-sm uppercase tracking-widest text-[var(--accent)] border border-[var(--accent)] cyber-chamfer-sm px-4 py-2 inline-block transition-all duration-150 hover:bg-[var(--accent)] hover:text-[var(--background)] hover:shadow-[var(--box-shadow-neon)] text-glow"
+                className="w-full h-12 font-mono text-sm font-semibold uppercase tracking-widest bg-transparent text-[var(--accent)] border-2 border-[var(--accent)] cyber-chamfer-sm flex items-center justify-center transition-all duration-150 hover:bg-[var(--accent)] hover:text-[var(--background)] hover:shadow-[var(--box-shadow-neon)] hover-float-slow text-glow"
               >
                 Join Partiful for text blast reminders →
               </a>
             ) : (
-              <span className="font-mono text-xs uppercase tracking-widest text-glow-muted">
-                Join Partiful for text blast reminders — set NEXT_PUBLIC_PARTIFUL_EVENT_ID in .env to enable link
+              <span className="font-mono text-xs uppercase tracking-widest text-glow-muted block text-center">
+                Join Partiful for text blast reminders — set NEXT_PUBLIC_PARTIFUL_EVENT_ID in .env to enable
               </span>
             )}
-          </p>
+          </div>
         </form>
         </div>
       </main>

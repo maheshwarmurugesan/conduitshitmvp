@@ -262,6 +262,11 @@ textarea::placeholder {
   93%, 95%, 97% { opacity: 0.85; }
 }
 
+@keyframes hover-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
 @keyframes fadeUp {
   from {
     opacity: 0;
@@ -346,6 +351,10 @@ textarea::placeholder {
   animation: glitch-flicker 3s step-end infinite;
 }
 
+.hover-float-slow:hover {
+  animation: hover-float 2s ease-in-out infinite;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .animate-fade-up,
   .animate-glitch,
@@ -353,6 +362,7 @@ textarea::placeholder {
   .glitch-corrupt,
   .glitch-corrupt-subtle,
   .glitch-flicker,
+  .hover-float-slow:hover,
   .tv-static::before,
   .tv-flicker::after {
     animation: none;
