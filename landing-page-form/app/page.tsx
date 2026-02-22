@@ -443,14 +443,6 @@ export default function Home() {
               </span>
             )}
           </div>
-          <p className="text-center pt-4">
-            <a
-              href="/verify"
-              className="font-mono text-xs text-glow-muted hover:text-[var(--accent)] hover:underline"
-            >
-              Check CRM connection →
-            </a>
-          </p>
         </form>
         </div>
       </main>
