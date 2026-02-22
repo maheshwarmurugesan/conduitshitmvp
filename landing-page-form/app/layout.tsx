@@ -24,6 +24,16 @@ export const metadata: Metadata = {
   title: "Mahesh Waran Murugesan | Join the network",
   description: "Personal site — share your details to join the network and get invited to events.",
   metadataBase: new URL("https://maheshwarmurugesan.com"),
+  openGraph: {
+    title: "Mahesh Waran Murugesan | Join the network",
+    description: "Share your details to join the network and get invited to events.",
+    url: "https://maheshwarmurugesan.com",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Mahesh Waran Murugesan | Join the network",
+    description: "Share your details to join the network and get invited to events.",
+  },
 };
 
 export default function RootLayout({
