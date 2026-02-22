@@ -22,11 +22,12 @@ function getSheetName(): string {
   return process.env.GOOGLE_SHEETS_SHEET_NAME?.trim() || "Sheet1";
 }
 
-/** Sheet names with spaces must be wrapped in single quotes for the API */
+/** Format range for Sheets API. Names with spaces need single quotes. */
 function formatRange(sheetName: string): string {
-  const needsQuotes = /[\s"'\\]/.test(sheetName);
-  const quoted = needsQuotes ? `'${sheetName.replace(/'/g, "''")}'` : sheetName;
-  return `${quoted}!A:I`;
+  const trimmed = sheetName.trim() || "Sheet1";
+  const needsQuotes = /[\s"'\\]/.test(trimmed);
+  const safe = needsQuotes ? `'${trimmed.replace(/'/g, "''")}'` : trimmed;
+  return `${safe}!A:I`;
 }
 
 export async function appendRow(values: string[]) {
