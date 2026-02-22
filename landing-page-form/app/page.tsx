@@ -249,23 +249,6 @@ export default function Home() {
           </p>
         </div>
 
-        <p className="text-center mb-8">
-          {partifulUrl ? (
-            <a
-              href={partifulUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="font-mono text-sm uppercase tracking-widest text-[var(--accent)] border border-[var(--accent)] cyber-chamfer-sm px-4 py-2 inline-block transition-all duration-150 hover:bg-[var(--accent)] hover:text-[var(--background)] hover:shadow-[var(--box-shadow-neon)] text-glow"
-            >
-              Join Partiful for text blast reminders →
-            </a>
-          ) : (
-            <span className="font-mono text-xs uppercase tracking-widest text-glow-muted">
-              Join Partiful for text blast reminders — set NEXT_PUBLIC_PARTIFUL_EVENT_ID in .env to enable link
-            </span>
-          )}
-        </p>
-
         <div
           ref={setScrollRef(1)}
           className={`animate-on-scroll rounded-sm py-6 px-4 ${visible[1] ? "visible" : ""}`}
@@ -442,20 +425,25 @@ export default function Home() {
           >
             {loading ? "Submitting…" : "Submit"}
           </button>
+
+          <p className="text-center pt-4">
+            {partifulUrl ? (
+              <a
+                href={partifulUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-mono text-sm uppercase tracking-widest text-[var(--accent)] border border-[var(--accent)] cyber-chamfer-sm px-4 py-2 inline-block transition-all duration-150 hover:bg-[var(--accent)] hover:text-[var(--background)] hover:shadow-[var(--box-shadow-neon)] text-glow"
+              >
+                Join Partiful for text blast reminders →
+              </a>
+            ) : (
+              <span className="font-mono text-xs uppercase tracking-widest text-glow-muted">
+                Join Partiful for text blast reminders — set NEXT_PUBLIC_PARTIFUL_EVENT_ID in .env to enable link
+              </span>
+            )}
+          </p>
         </form>
         </div>
-
-        <p
-          ref={setScrollRef(2)}
-          className={`mt-10 text-center animate-on-scroll ${visible[2] ? "visible" : ""}`}
-        >
-          <a
-            href="/admin"
-            className="font-mono text-xs uppercase tracking-widest text-glow-muted hover:text-[var(--accent)] hover-glow transition-all duration-200"
-          >
-            Admin
-          </a>
-        </p>
       </main>
     </div>
   );
