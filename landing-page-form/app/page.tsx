@@ -215,8 +215,9 @@ export default function Home() {
           }`}
           style={mounted ? { animation: "fadeUp 0.5s ease-out 0.1s both" } : undefined}
         >
-          Enter your details below. This automates future event outreach and
-          we&apos;ll give preference to those who sign up here.
+          Enter your details below. You&apos;ll be connected to startups, angels,
+          and VCs. This automates future event outreach and we&apos;ll give
+          preference to those who sign up here.
         </p>
 
         {/* Header reverted; only the company typewriter line is in the spacer */}
